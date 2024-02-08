@@ -17,7 +17,7 @@ public interface UserService {
 
     Optional<UserModel> findById(UUID userId);
 
-    UserModel save(UserModel userModel);
+    void save(UserModel userModel);
 
     boolean existsByEmail(String email);
 
