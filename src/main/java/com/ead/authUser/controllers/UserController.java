@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +62,8 @@ public class UserController {
     }
     
     @PutMapping("/{userId}")
-    public ResponseEntity<Object> updateUser(@PathVariable UUID userId, @RequestBody @JsonView(UserDto.UserView.RegistrationPost.class) UserDto userdto) {
+    public ResponseEntity<Object> updateUser(@PathVariable UUID userId, @RequestBody @Validated(UserDto.UserView.UserPut.class)
+                                                             @JsonView(UserDto.UserView.RegistrationPost.class) UserDto userdto) {
         Optional<UserModel> userModelOptional = userService.findById(userId);
 
         if (!userModelOptional.isPresent()) {
@@ -81,7 +83,8 @@ public class UserController {
     }
     
     @PutMapping("/{userId}/password")
-    public ResponseEntity<Object> updatePassword(@PathVariable UUID userId, @RequestBody @JsonView(UserDto.UserView.PasswordPut.class) UserDto userdto) {
+    public ResponseEntity<Object> updatePassword(@PathVariable UUID userId, @RequestBody @Validated(UserDto.UserView.PasswordPut.class) 
+                                                                            @JsonView(UserDto.UserView.PasswordPut.class) UserDto userdto) {
         Optional<UserModel> userModelOptional = userService.findById(userId);
         
         if (!userModelOptional.isPresent()) {
@@ -103,7 +106,8 @@ public class UserController {
     }
     
     @PutMapping("/{userId}/image")
-    public ResponseEntity<Object> updateImage(@PathVariable UUID userId, @RequestBody @JsonView(UserDto.UserView.ImagePut.class) UserDto userdto) {
+    public ResponseEntity<Object> updateImage(@PathVariable UUID userId, @RequestBody @Validated(UserDto.UserView.ImagePut.class) 
+                                                                        @JsonView(UserDto.UserView.ImagePut.class) UserDto userdto) {
         Optional<UserModel> userModelOptional = userService.findById(userId);
         
         if (!userModelOptional.isPresent()) {
