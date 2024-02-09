@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ead.authUser.dtos.UserDto;
 import com.ead.authUser.models.UserModel;
 import com.ead.authUser.services.UserService;
+import com.ead.authUser.specifications.SpecificationTemplate;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,10 +39,10 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<Page<UserModel>> getAllUsers(@PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC)
-                                                                    Pageable pageable) {
+    public ResponseEntity<Page<UserModel>> getAllUsers(SpecificationTemplate.UserSpec spec,
+                                            @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable) {
 
-        Page<UserModel> userModelPage = userService.findAll(pageable);
+        Page<UserModel> userModelPage = userService.findAll(spec, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(userModelPage);
     }
