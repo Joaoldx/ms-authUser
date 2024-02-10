@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import com.ead.authUser.dtos.UserDto;
 import com.ead.authUser.models.UserModel;
 import com.ead.authUser.services.UserService;
@@ -43,6 +46,11 @@ public class UserController {
                                             @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable) {
 
         Page<UserModel> userModelPage = userService.findAll(spec, pageable);
+        if (!userModelPage.isEmpty()) {
+            for (UserModel user : userModelPage.toList()) {
+                user.add(linkTo(methodOn(UserController.class).getOneUser(user.getUserId())).withSelfRel());
+            }
+        }
 
         return ResponseEntity.status(HttpStatus.OK).body(userModelPage);
     }
