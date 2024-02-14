@@ -21,6 +21,9 @@ import com.ead.authUser.models.UserModel;
 import com.ead.authUser.services.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/auth")
@@ -33,11 +36,15 @@ public class AuthenticationController {
     public ResponseEntity<Object> registerUser(@RequestBody
                                 @JsonView(UserDto.UserView.RegistrationPost.class) @Validated(UserDto.UserView.RegistrationPost.class)  UserDto userDto) {
 
+        log.debug("POST registerUser userDto received {}", userDto.toString());
+
         if (userService.existsByUsername(userDto.getUsername())) {
+            log.warn("Username {} is already taken", userDto.getUsername());
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Username is already taken!");
         }
-
+        
         if (userService.existsByUsername(userDto.getEmail())) {
+            log.warn("Email {} is already taken", userDto.getEmail());
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Email is already taken!");
         }
 
@@ -50,7 +57,10 @@ public class AuthenticationController {
         userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
 
         userService.save(userModel);
-
+        
+        log.debug("POST registerUser userDto saved {}", userDto.toString());
+        log.info("User saved successfully userId {}", userDto.getUserId());
+        
         return ResponseEntity.status(HttpStatus.CREATED).body(userModel);
     }
 }
