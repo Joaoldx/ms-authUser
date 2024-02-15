@@ -113,7 +113,7 @@ public class UserController {
                                                 @RequestBody @Validated(UserDto.UserView.PasswordPut.class)
                                                 @JsonView(UserDto.UserView.PasswordPut.class) UserDto userdto) {
         
-        log.debug("PUT updatePassword userDto received {} ", userdto.toString());
+        log.debug("PUT updatePassword userDto received userId {} ", userdto.getUserId());
 
         Optional<UserModel> userModelOptional = userService.findById(userId);
         
@@ -131,7 +131,7 @@ public class UserController {
         userModel.setPassword(userdto.getPassword());
         userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
         
-        log.debug("PUT updateUser userPassword saved {} ", userModel.toString());
+        log.debug("PUT updateUser userPassword userId {} ", userModel.getUserId());
         log.info("Password updated successfully userId {} ", userModel.getUserId());
 
         userService.save(userModel);
@@ -144,7 +144,7 @@ public class UserController {
                                                 @RequestBody @Validated(UserDto.UserView.ImagePut.class) 
                                                 @JsonView(UserDto.UserView.ImagePut.class) UserDto userdto) {
 
-        log.debug("PUT updateImage userDto received {} ", userdto.toString());
+        log.debug("PUT updateImage userDto userId {} ", userdto.getUserId());
 
         Optional<UserModel> userModelOptional = userService.findById(userId);
         
@@ -159,7 +159,7 @@ public class UserController {
 
         userService.save(userModel);
 
-        log.debug("PUT updateImage userModel saved {} ", userModel.toString());
+        log.debug("PUT updateImage userModel userId {} ", userModel.getUserId());
         log.info("Image updated successfully userId {} ", userModel.getUserId());
 
         return ResponseEntity.status(HttpStatus.OK).body("Password updated successfully");
