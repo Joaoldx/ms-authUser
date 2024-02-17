@@ -1,9 +1,13 @@
 package com.ead.authUser.specifications;
 
+import java.util.UUID;
+
 import org.springframework.data.jpa.domain.Specification;
 
+import com.ead.authUser.models.UserCourseModel;
 import com.ead.authUser.models.UserModel;
 
+import jakarta.persistence.criteria.Join;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
@@ -14,7 +18,16 @@ public class SpecificationTemplate {
     @And({
         @Spec(path = "userType", spec = Equal.class),
         @Spec(path = "userStatus", spec = Equal.class),
-        @Spec(path = "email", spec = Like.class)
+        @Spec(path = "email", spec = Like.class),
+        @Spec(path = "fullname", spec = Like.class)
     })
     public interface UserSpec extends Specification<UserModel> {}
+
+    public static Specification<UserModel> userCourseId(final UUID courseId) {
+        return (root, query, cb) -> {
+            query.distinct(true);
+            Join<UserModel, UserCourseModel> userProd = root.join("usersCourses");
+            return cb.equal(userProd.get("courseId"), courseId);
+        };
+    }
 }
