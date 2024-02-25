@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Component
-public class UserClient {
+public class CourseClient {
     
     @Autowired
     RestTemplate restTemplate;

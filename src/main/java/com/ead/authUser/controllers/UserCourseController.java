@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ead.authUser.clients.UserClient;
+import com.ead.authUser.clients.CourseClient;
 import com.ead.authUser.dtos.CourseDto;
 
 import lombok.extern.log4j.Log4j2;
@@ -25,12 +25,12 @@ import lombok.extern.log4j.Log4j2;
 public class UserCourseController {
 
     @Autowired
-    UserClient userClient;
+    CourseClient courseClient;
     
     @GetMapping("/users/{userId}/courses")
     public ResponseEntity<Page<CourseDto>> getAllCoursesByUser (@PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC) Pageable pageable,
                                                         @PathVariable UUID userId) {
         
-        return ResponseEntity.status(HttpStatus.OK).body(userClient.getAllCoursesByUser(userId, pageable));                  
+        return ResponseEntity.status(HttpStatus.OK).body(courseClient.getAllCoursesByUser(userId, pageable));                  
     }
 }
