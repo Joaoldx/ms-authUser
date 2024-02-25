@@ -5,6 +5,9 @@ import java.util.UUID;
 import com.ead.authUser.enums.CourseLevel;
 import com.ead.authUser.enums.CourseStatus;
 
+import lombok.Data;
+
+@Data
 public class CourseDto {
     
     private UUID courseId;
