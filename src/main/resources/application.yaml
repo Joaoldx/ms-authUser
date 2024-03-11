@@ -1,28 +1,31 @@
-server: 
-    port: 8087
+server:
+  port: 8087
+  servlet:
+    context-path: '/ead-authuser/'
 
 spring:
-    application:
-        name: ead-authUser-service
-    datasource:
-        url: jdbc:postgresql://localhost:5432/ead-authuser
-        username: postgres
-        password: docker
+  application:
+    name: ead-authUser-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ead-authuser
+    username: postgres
+    password: docker
 
-    jpa:
-        hibernate:
-            ddl-auto: update
-            dialect: org.hibernate.dialect.PostgreSQLDialect
-            jdbc:
-                lob.non-contextual-creation: true
-        properties:
-            hibernate:
-                show_sql: true
-    output:
-        ansi:
-           enabled: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      jdbc:
+        lob.non-contextual-creation: true
+    properties:
+      hibernate:
+        show_sql: true
+  output:
+    ansi:
+      enabled: always
 
 logging:
+<<<<<<< Updated upstream
     level: 
         com.ead: TRACE
         root: INFO
@@ -33,10 +36,22 @@ ead:
     api:
         url:
             course: 'http://ead-course-service'
+=======
+  level:
+    "[com.ead]": TRACE
+    root: INFO
+    "[org.springframework.web]": DEBUG
+    "[org.hibernate]": INFO
+
+ead:
+  api:
+    url:
+      course: "http://localhost:8082"
+>>>>>>> Stashed changes
 
 eureka:
-    client:
-        serviceUrl:
-            defaultZone: 'http://localhost:8761/eureka'
-    instance:
-        hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: "http://localhost:8761/eureka"
+  instance:
+    hostname: localhost
