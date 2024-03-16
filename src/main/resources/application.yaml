@@ -25,29 +25,16 @@ spring:
       enabled: always
 
 logging:
-<<<<<<< Updated upstream
-    level: 
-        com.ead: TRACE
-        root: INFO
-        org.springframework.web: DEBUG
-        org.hibernate: INFO
+  level:
+      com.ead: TRACE
+      root: INFO
+      org.springframework.web: DEBUG
+      org.hibernate: INFO
 
 ead:
     api:
         url:
             course: 'http://ead-course-service'
-=======
-  level:
-    "[com.ead]": TRACE
-    root: INFO
-    "[org.springframework.web]": DEBUG
-    "[org.hibernate]": INFO
-
-ead:
-  api:
-    url:
-      course: "http://localhost:8082"
->>>>>>> Stashed changes
 
 eureka:
   client:
